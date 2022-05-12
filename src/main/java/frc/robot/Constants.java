@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -25,8 +26,12 @@ public final class Constants {
     public static int[] backLeftModule = {};
     // locations for swerve modules relative to robot center.
     //measure from center of robot to center of modules
-    public static Translation2d frontRightLocation = new Translation2d(0, 0);
-    public static Translation2d frontLeftLocation = new Translation2d(0, 0);
-    public static Translation2d backRightLocation = new Translation2d(0, 0);
-    public static Translation2d backLeftLocation = new Translation2d(0, 0); 
+    public static Translation2d frontRightLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
+    public static Translation2d frontLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
+    public static Translation2d backRightLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
+    public static Translation2d backLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
+    public static int frontRightEncoder = 0;
+    public static int frontLeftEncoder = 0;
+    public static int backRightEncoder = 0;
+    public static int backLeftEncoder = 0;
 }

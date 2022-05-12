@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.SwerveDrivebase;
+import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -19,8 +21,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+
+  private final SwerveModule _frontRightModule = new SwerveModule(Constants.frontRightModule[0], Constants.frontRightModule[1], Constants.frontRightEncoder); 
+  private final SwerveModule _frontLeftModule = new SwerveModule(Constants.frontLeftModule[0], Constants.frontLeftModule[1], Constants.frontLeftEncoder); 
+  private final SwerveModule _backRightModule = new SwerveModule(Constants.backRightModule[0], Constants.backRightModule[1], Constants.backRightEncoder);
+  private final SwerveModule _backLeftModule = new SwerveModule(Constants.backLeftModule[0], Constants.backLeftModule[1], Constants.backLeftEncoder);
+  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(_frontRightModule, _frontLeftModule, _backRightModule, _backLeftModule);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
