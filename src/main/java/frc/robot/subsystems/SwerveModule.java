@@ -14,9 +14,9 @@ public class SwerveModule {
      * @param angleMotor - the port of the angle motor
      * Creates a new SwerveModule
      */
-    public SwerveModule(int speedPort, int anglePort, int absEncoderPort){
-        this.speedMotor = new WPI_TalonFX(speedPort);
-        this.angleMotor = new WPI_TalonFX(anglePort);
+    public SwerveModule(int speedMotorId, int angleMotorId, int absEncoderPort){
+        this.speedMotor = new WPI_TalonFX(speedMotorId);
+        this.angleMotor = new WPI_TalonFX(angleMotorId);
         this.absoluteEncoder = new AnalogInput(absEncoderPort);
     }
 }

@@ -1,12 +1,17 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import frc.robot.Constants;
+
 public class SwerveDrivebase {
     //priv variables
-    private SwerveModule frModule;
-    private SwerveModule flModule;
-    private SwerveModule brModule;
-    private SwerveModule blModule;
-
+    public SwerveModule frModule;
+    public SwerveModule flModule;
+    public SwerveModule brModule;
+    public SwerveModule blModule;
+    public SwerveDriveKinematics _kinematics;
+    public SwerveModuleState[] states;
     // constructor
     /**
      * @param fr - the front right module
@@ -20,5 +25,13 @@ public class SwerveDrivebase {
         this.flModule = fl;
         this.brModule = br;
         this.blModule = bl;
+        this._kinematics = new SwerveDriveKinematics(
+            Constants.frontRightLocation,
+            Constants.frontLeftLocation,
+            Constants.backRightLocation, 
+            Constants.backLeftLocation
+        );
+        //converting the locations of the SwerveModuleStates
+        // this.states = this._kinematics.toSwerveModuleStates(chassisSpeeds);
     }
 }

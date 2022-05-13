@@ -30,6 +30,7 @@ public final class Constants {
     public static Translation2d frontLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
     public static Translation2d backRightLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
     public static Translation2d backLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
+    //ports of the encoders
     public static int frontRightEncoder = 0;
     public static int frontLeftEncoder = 0;
     public static int backRightEncoder = 0;
