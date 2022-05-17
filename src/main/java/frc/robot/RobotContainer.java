@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -28,7 +29,8 @@ public class RobotContainer {
   private final SwerveModule _backRightModule = new SwerveModule(Constants.backRightModule[0], Constants.backRightModule[1], Constants.backRightEncoder);
   private final SwerveModule _backLeftModule = new SwerveModule(Constants.backLeftModule[0], Constants.backLeftModule[1], Constants.backLeftEncoder);
   private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(_frontRightModule, _frontLeftModule, _backRightModule, _backLeftModule);
-
+  public static Joystick leftJoystick = new Joystick(0);
+  public static Joystick rightJoystick = new Joystick(1);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings

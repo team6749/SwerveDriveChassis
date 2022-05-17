@@ -32,6 +32,7 @@ public class SwerveDrivebase {
             Constants.backLeftLocation
         );
         //converting the locations of the SwerveModuleStates
-        // this.states = this._kinematics.toSwerveModuleStates(chassisSpeeds);
+        //[0] = fr; [1] = fl; [2] = br; [3] = bl;
+        this.states = this._kinematics.toSwerveModuleStates(chassisSpeeds);
     }
 }
