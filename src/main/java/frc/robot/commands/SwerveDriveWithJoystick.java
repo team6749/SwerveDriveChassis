@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -16,19 +18,18 @@ public class SwerveDriveWithJoystick extends CommandBase {
   //private variables
   private SwerveDrivebase _swerveDrivebase;
   private SwerveModule swerveModule;
-  private Joystick _right;
-  private Joystick _left;
+  private Joystick joystick;
+  private SlewRateLimiter slewRateX = new SlewRateLimiter(5);
+  private SlewRateLimiter slewRateY = new SlewRateLimiter(5);
 
   /**
    * Creates a new ExampleCommand.
    * @param subsystem The subsystem used by this command.
-   * @param right The right joystick
-   * @param left The left Joystick
+   * @param joy The joystick used for controlling the swerve system
    */
-  public SwerveDriveWithJoystick(SwerveDrivebase subsystem, Joystick left, Joystick right,) {
+  public SwerveDriveWithJoystick(SwerveDrivebase subsystem, Joystick joy) {
     _swerveDrivebase = subsystem;
-    _right = right;
-    _left = left;
+    joystick = joy;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(_swerveDrivebase);
   }
@@ -42,17 +43,19 @@ public class SwerveDriveWithJoystick extends CommandBase {
   public void execute() {
 
     // get the joystick output values
-    double xSpeed = _left.getX();
-    double ySpeed = _left.getY();
-    double directionalSpeed = _right.
+    double xSpeed = joystick.getX();
+    double ySpeed = joystick.getY();
+    double directionalSpeed = joystick.getTwist();
 
     //apply the slew rate limiter
+    double limitSpeedX = slewRateX.calculate(xSpeed);
+    double limitSpeedY = slewRateY.calculate(ySpeed);
 
     //Construct the chassis speeds
-
-    //convert the chassis speeds to individual module states
+    ChassisSpeeds desiredSpeeds = new ChassisSpeeds(limitSpeedX, limitSpeedY, directionalSpeed);
 
     //output each speed to the wheels
+    _swerveDrivebase.setDesiredChassisSpeeds(desiredSpeeds);
   }
 
   // Called once the command ends or is interrupted.
@@ -64,6 +67,7 @@ public class SwerveDriveWithJoystick extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //never true since default command
     return false;
   }
 }

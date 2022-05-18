@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import frc.robot.subsystems.SwerveModule;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -19,20 +20,9 @@ public final class Constants {
     //swerve modules
     //[0] = speed/power motor;
     //[1] = angle/direction motor
-
-    public static int[] frontRightModule = {};
-    public static int[] frontLeftModule = {};
-    public static int[] backRightModule = {};
-    public static int[] backLeftModule = {};
-    // locations for swerve modules relative to robot center.
-    //measure from center of robot to center of modules
-    public static Translation2d frontRightLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
-    public static Translation2d frontLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
-    public static Translation2d backRightLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
-    public static Translation2d backLeftLocation = new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0));
-    //ports of the encoders
-    public static int frontRightEncoder = 0;
-    public static int frontLeftEncoder = 0;
-    public static int backRightEncoder = 0;
-    public static int backLeftEncoder = 0;
+    // absolute encoder port
+    // pos = translation2d distance from the center
+    public static SwerveModule left = new SwerveModule("Left", 3, 3, 3, 0, new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)));
+     public static SwerveModule right = new SwerveModule("Right", 3, 3, 3, 0, new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)));
+    
 }

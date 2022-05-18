@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SwerveDriveWithJoystick;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveDrivebase;
 import frc.robot.subsystems.SwerveModule;
@@ -24,17 +27,14 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final SwerveModule _frontRightModule = new SwerveModule(Constants.frontRightModule[0], Constants.frontRightModule[1], Constants.frontRightEncoder); 
-  private final SwerveModule _frontLeftModule = new SwerveModule(Constants.frontLeftModule[0], Constants.frontLeftModule[1], Constants.frontLeftEncoder); 
-  private final SwerveModule _backRightModule = new SwerveModule(Constants.backRightModule[0], Constants.backRightModule[1], Constants.backRightEncoder);
-  private final SwerveModule _backLeftModule = new SwerveModule(Constants.backLeftModule[0], Constants.backLeftModule[1], Constants.backLeftEncoder);
-  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(_frontRightModule, _frontLeftModule, _backRightModule, _backLeftModule);
-  public static Joystick leftJoystick = new Joystick(0);
-  public static Joystick rightJoystick = new Joystick(1);
+  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.left, Constants.right});
+  public static Joystick _joystick = new Joystick(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    _SwerveDrivebase.setDefaultCommand(new SwerveDriveWithJoystick(_SwerveDrivebase, _joystick));
   }
 
   /**
