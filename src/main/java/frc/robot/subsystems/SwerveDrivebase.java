@@ -5,7 +5,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+
 
 public class SwerveDrivebase extends SubsystemBase{
     //priv variables
@@ -14,15 +14,15 @@ public class SwerveDrivebase extends SubsystemBase{
     public SwerveModuleState[] states;
     // constructor
     /**
-     * @param mods - An Array of SwerveDriveModules
+     * @param modules - An Array of SwerveDriveModules
      * Creates a new SwerveDrivebase
      */
-    public SwerveDrivebase(SwerveModule[] mods){
-        modules = mods;
+    public SwerveDrivebase(SwerveModule[] modules){
+        this.modules = modules;
         //constructs a drivebase using translation2ds assigned to each module
-        Translation2d[] translations = new Translation2d[mods.length];
+        Translation2d[] translations = new Translation2d[modules.length];
         for(int i = 0; i < translations.length; i++){
-            translations[i] = mods[i].position;
+            translations[i] = modules[i].position;
         }
         _kinematics = new SwerveDriveKinematics(translations);
     }
@@ -34,7 +34,10 @@ public class SwerveDrivebase extends SubsystemBase{
             swerveModule.periodic();
         }
     }
-
+    /**
+     * @param cSpeeds the desired chassis speeds to set each module to
+     * converts each module to the ChassisSpeeds cSpeeds
+     */
     public void setDesiredChassisSpeeds(ChassisSpeeds cSpeeds) {
         SwerveModuleState[] _desiredStates = _kinematics.toSwerveModuleStates(cSpeeds);
         for (int i = 0; i < _desiredStates.length; i++) {

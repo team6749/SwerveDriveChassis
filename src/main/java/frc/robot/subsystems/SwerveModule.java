@@ -14,7 +14,7 @@ public class SwerveModule {
     private final WPI_TalonFX driveMotor; 
     private final WPI_TalonFX angleMotor;
     private final WPI_CANCoder absoluteEncoder;
-    public final PIDController _PidController = new PIDController(0, 0, 0);
+    public final PIDController PIDController = new PIDController(0, 0, 0);
     public Translation2d position;
     public double calibrationDegrees;
     public String name;
@@ -34,19 +34,28 @@ public class SwerveModule {
         this.calibrationDegrees = calibrationDegrees;
         this.position = pos;
         this.name = name;
-        _PidController.enableContinuousInput(-Math.PI, Math.PI);
+        PIDController.enableContinuousInput(-Math.PI, Math.PI);
     }
 
     //Meters per second
+    /**
+     * @return the velocity of robot in meters per second
+     */
     public double getDriveEncoderVelocity() {
         return 2048 * 1/8.14 * driveMotor.getSelectedSensorVelocity();
     }
 
+    /**
+     * @return the position of the drive motor
+     */
     public double getDriveEncoderPos(){
         return 2048 * 1/8.14 * driveMotor.getSelectedSensorPosition();
     }
 
     //Degrees
+    /**
+     * @return the rotation of a module in degrees
+     */
     public double getRotationEncoder() {
         return absoluteEncoder.getAbsolutePosition() + calibrationDegrees;
     }
@@ -57,19 +66,23 @@ public class SwerveModule {
         SmartDashboard.putNumber("Swerve " + name + " velocity", getDriveEncoderVelocity());
     }
 
-
+    /**
+     * @return returns the state of the SwerveModule in type SwerveModuleState
+     */
     public SwerveModuleState getState() {
-        //replace _driveEncoder with the speedMotor encoder
         return new SwerveModuleState(getDriveEncoderVelocity(), new Rotation2d(getRotationEncoder()));
     }
-
+    /**
+     * @param desiredState the desired state of a swerve Module
+     * sets the swerve module to the desiredState
+     */
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, new Rotation2d(getRotationEncoder()));
 
                     // Calculate the turning motor output from the turning PID controller.
         final double turnOutput =
-        _PidController.calculate(getRotationEncoder(), state.angle.getDegrees());
+        PIDController.calculate(getRotationEncoder(), state.angle.getDegrees());
     
         // // Calculate the drive output from the drive PID controller.
         // final double driveOutput =
@@ -84,6 +97,7 @@ public class SwerveModule {
         // angleMotor.set(turnOutput + turnFeedforward);
 
         angleMotor.set(turnOutput);
+        //setting the motor to the speed it needs to be speeded
         driveMotor.set(state.speedMetersPerSecond * 0.5);
     }
 }

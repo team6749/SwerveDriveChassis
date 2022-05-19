@@ -9,23 +9,21 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.subsystems.SwerveDrivebase;
-import frc.robot.subsystems.SwerveModule;
 
 /** An example command that uses an example subsystem. */
 public class SwerveDriveWithJoystick extends CommandBase {
   //private variables
   private SwerveDrivebase _swerveDrivebase;
-  private SwerveModule swerveModule;
   private Joystick joystick;
   private SlewRateLimiter slewRateX = new SlewRateLimiter(5);
   private SlewRateLimiter slewRateY = new SlewRateLimiter(5);
 
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new SwerveDriveWithJoystick command.
    * @param subsystem The subsystem used by this command.
    * @param joy The joystick used for controlling the swerve system
+   * drives the swerve robot with only 1 joystick
    */
   public SwerveDriveWithJoystick(SwerveDrivebase subsystem, Joystick joy) {
     _swerveDrivebase = subsystem;
