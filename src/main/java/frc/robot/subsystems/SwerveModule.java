@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange.*;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,7 +16,7 @@ public class SwerveModule {
     private final WPI_TalonFX driveMotor; 
     private final WPI_TalonFX angleMotor;
     private final WPI_CANCoder absoluteEncoder;
-    public final PIDController PIDController = new PIDController(0, 0, 0);
+    public final PIDController PIDController = new PIDController(0.01, 0, 0);
     public Translation2d position;
     public double calibrationDegrees;
     public String name;
@@ -31,10 +33,11 @@ public class SwerveModule {
         this.driveMotor = new WPI_TalonFX(speedMotorId);
         this.angleMotor = new WPI_TalonFX(angleMotorId);
         this.absoluteEncoder = new WPI_CANCoder(absEncoderPort);
-        this.calibrationDegrees = calibrationDegrees;
+        this.absoluteEncoder.configMagnetOffset(calibrationDegrees);
+        this.absoluteEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
         this.position = pos;
         this.name = name;
-        PIDController.enableContinuousInput(-Math.PI, Math.PI);
+        PIDController.enableContinuousInput(0, 360);
     }
 
     //Meters per second
@@ -42,14 +45,14 @@ public class SwerveModule {
      * @return the velocity of robot in meters per second
      */
     public double getDriveEncoderVelocity() {
-        return 2048 * 1/8.14 * driveMotor.getSelectedSensorVelocity();
+        return driveMotor.getSelectedSensorVelocity() / (2048 * 8.14);
     }
 
     /**
      * @return the position of the drive motor
      */
     public double getDriveEncoderPos(){
-        return 2048 * 1/8.14 * driveMotor.getSelectedSensorPosition();
+        return driveMotor.getSelectedSensorPosition() / (2048 * 8.14) * (Math.PI * 0.1);
     }
 
     //Degrees
@@ -57,20 +60,22 @@ public class SwerveModule {
      * @return the rotation of a module in degrees
      */
     public double getRotationEncoder() {
-        return absoluteEncoder.getAbsolutePosition() + calibrationDegrees;
+        return absoluteEncoder.getAbsolutePosition();
     }
 
     //This must be called all the time
     public void periodic () {
         SmartDashboard.putNumber("Swerve " + name + " rotation", getRotationEncoder());
         SmartDashboard.putNumber("Swerve " + name + " velocity", getDriveEncoderVelocity());
+        SmartDashboard.putNumber("Swerve " + name + " position", getDriveEncoderPos());
+
     }
 
     /**
      * @return returns the state of the SwerveModule in type SwerveModuleState
      */
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveEncoderVelocity(), new Rotation2d(getRotationEncoder()));
+        return new SwerveModuleState(getDriveEncoderVelocity(), Rotation2d.fromDegrees(getRotationEncoder()));
     }
     /**
      * @param desiredState the desired state of a swerve Module
@@ -78,12 +83,15 @@ public class SwerveModule {
      */
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
-        SwerveModuleState state = SwerveModuleState.optimize(desiredState, new Rotation2d(getRotationEncoder()));
+        SwerveModuleState state = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getRotationEncoder()));
 
-                    // Calculate the turning motor output from the turning PID controller.
+        SmartDashboard.putNumber("Swerve " + name + " target rotation", state.angle.getDegrees());
+    
+        // Calculate the turning motor output from the turning PID controller.
         final double turnOutput =
         PIDController.calculate(getRotationEncoder(), state.angle.getDegrees());
-    
+        SmartDashboard.putNumber("Swerve " + name + " target pid", turnOutput);
+
         // // Calculate the drive output from the drive PID controller.
         // final double driveOutput =
         //     _PidController.calculate(getDriveEncoder(), state.speedMetersPerSecond);

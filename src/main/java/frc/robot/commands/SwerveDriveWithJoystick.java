@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -41,9 +43,15 @@ public class SwerveDriveWithJoystick extends CommandBase {
   public void execute() {
 
     // get the joystick output values
-    double xSpeed = joystick.getX();
-    double ySpeed = joystick.getY();
-    double directionalSpeed = joystick.getTwist();
+    double xSpeed = -joystick.getY();
+    double ySpeed = -joystick.getX();
+    double directionalSpeed = -joystick.getTwist() * 3;
+
+    //applies a controller deadzone 
+    if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
+      _swerveDrivebase.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 0));
+      return;
+    }
 
     //apply the slew rate limiter
     double limitSpeedX = slewRateX.calculate(xSpeed);

@@ -22,7 +22,7 @@ public final class Constants {
     //[1] = angle/direction motor
     // absolute encoder port
     // pos = translation2d distance from the center
-    public static SwerveModule left = new SwerveModule("Left", 3, 3, 3, 0, new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)));
-     public static SwerveModule right = new SwerveModule("Right", 3, 3, 3, 0, new Translation2d(Units.inchesToMeters(0), Units.inchesToMeters(0)));
-    
+    public static SwerveModule flModule = new SwerveModule("Front Left", 5, 4, 6, -66.6, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(11.25)));
+    public static SwerveModule blModule = new SwerveModule("Back Left", 1, 3, 2, -43, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(11.25)));
+     
 }

@@ -20,9 +20,8 @@ import frc.robot.subsystems.SwerveModule;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.left, Constants.right});
+  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.flModule, Constants.blModule});
   public static Joystick _joystick = new Joystick(0);
-  private final SwerveDriveWithJoystick _DriveWithJoystick = new SwerveDriveWithJoystick(_SwerveDrivebase, _joystick);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   
   public RobotContainer() {
