@@ -45,7 +45,7 @@ public class SwerveDriveWithJoystick extends CommandBase {
     // get the joystick output values
     double xSpeed = -joystick.getY();
     double ySpeed = -joystick.getX();
-    double directionalSpeed = -joystick.getTwist() * 3;
+    double directionalSpeed = -joystick.getTwist() * 2.5;
 
     //applies a controller deadzone 
     if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
@@ -57,8 +57,11 @@ public class SwerveDriveWithJoystick extends CommandBase {
     double limitSpeedX = slewRateX.calculate(xSpeed);
     double limitSpeedY = slewRateY.calculate(ySpeed);
 
-    //Construct the chassis speeds
-    ChassisSpeeds desiredSpeeds = new ChassisSpeeds(limitSpeedX, limitSpeedY, directionalSpeed);
+    //Construct the chassis speeds - robot oriented
+    // ChassisSpeeds desiredSpeeds = new ChassisSpeeds(limitSpeedX, limitSpeedY, directionalSpeed);
+
+    //field oriented drive chassis speeds
+    ChassisSpeeds desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(limitSpeedX, limitSpeedY, directionalSpeed, _swerveDrivebase.getChassisRotation());
 
     //output each speed to the wheels
     _swerveDrivebase.setDesiredChassisSpeeds(desiredSpeeds);

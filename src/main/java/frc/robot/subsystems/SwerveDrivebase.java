@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
@@ -12,6 +14,7 @@ public class SwerveDrivebase extends SubsystemBase{
     public SwerveModule[] modules;
     public SwerveDriveKinematics _kinematics;
     public SwerveModuleState[] states;
+    public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
     // constructor
     /**
      * @param modules - An Array of SwerveDriveModules
@@ -27,6 +30,9 @@ public class SwerveDrivebase extends SubsystemBase{
         _kinematics = new SwerveDriveKinematics(translations);
     }
 
+    public Rotation2d getChassisRotation(){
+        return Rotation2d.fromDegrees(-gyro.getAngle());
+    }
     @Override
     public void periodic() {
         //Call periodic on children
