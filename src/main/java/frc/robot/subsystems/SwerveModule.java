@@ -84,13 +84,10 @@ public class SwerveModule {
     public void setDesiredState(SwerveModuleState desiredState) {
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getRotationEncoder()));
-
-        SmartDashboard.putNumber("Swerve " + name + " target rotation", state.angle.getDegrees());
     
         // Calculate the turning motor output from the turning PID controller.
         final double turnOutput =
         PIDController.calculate(getRotationEncoder(), state.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve " + name + " target pid", turnOutput);
 
         // // Calculate the drive output from the drive PID controller.
         // final double driveOutput =
