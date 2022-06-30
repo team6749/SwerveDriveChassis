@@ -25,5 +25,5 @@ public final class Constants {
     public static SwerveModule flModule = new SwerveModule("Front Left", 1, 2, 3, -69.6, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(11.25)));
     public static SwerveModule blModule = new SwerveModule("Back Left", 4, 5, 6, -43, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(11.25)));
     public static SwerveModule brModule = new SwerveModule("Back Right", 7, 8, 9, -72.6, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(-11.25)));
-     
+    public static SwerveModule frModule = new SwerveModule("Front Right", 10, 11, 12,-55.5, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(-11.25)));
 }

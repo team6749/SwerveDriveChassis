@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SwerveDriveWithJoystick;
 import frc.robot.subsystems.SwerveDrivebase;
 import frc.robot.subsystems.SwerveModule;
@@ -21,7 +22,7 @@ import frc.robot.subsystems.SwerveModule;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.flModule, Constants.blModule, Constants.brModule});
+  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.flModule, Constants.blModule, Constants.frModule, Constants.brModule});
   public static Joystick _joystick = new Joystick(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   
@@ -38,7 +39,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton resetGyro = new JoystickButton(_joystick, 2).whenReleased();
+    final JoystickButton resetGyro = new JoystickButton(_joystick, 2);
+    resetGyro.whenPressed(new ResetGyro(_SwerveDrivebase));
   }
 
   /**
