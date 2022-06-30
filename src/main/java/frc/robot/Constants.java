@@ -25,7 +25,6 @@ public final class Constants {
     // pos = translation2d distance from the center
     public static SwerveModule flModule = new SwerveModule("Front Left", 1, 2, 3, -66.5, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(11.25)));
     public static SwerveModule blModule = new SwerveModule("Back Left", 4, 5, 6, -38.1, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(11.25)));
- //   public static SwerveModule brModule = new SwerveModule("Back Right", 7, 8, 9, -72.6, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(-11.25)));
     public static SwerveModule brModule = new SwerveModule("Back Right", 7, 8, 9, 107.6, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(-11.25)));
      
 }
