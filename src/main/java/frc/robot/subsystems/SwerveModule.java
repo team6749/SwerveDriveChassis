@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
@@ -38,6 +39,8 @@ public class SwerveModule {
         this.position = pos;
         this.name = name;
         PIDController.enableContinuousInput(0, 360);
+        driveMotor.setNeutralMode(NeutralMode.Brake);
+        angleMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     //Meters per second
@@ -82,6 +85,11 @@ public class SwerveModule {
      * sets the swerve module to the desiredState
      */
     public void setDesiredState(SwerveModuleState desiredState) {
+        //prevents wheels from resetting back to straight orientation
+        if (Math.abs(desiredState.speedMetersPerSecond) < 0.001) {
+            stop();
+            return;
+        }
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getRotationEncoder()));
     
@@ -104,5 +112,13 @@ public class SwerveModule {
         angleMotor.set(turnOutput);
         //setting the motor to the speed it needs to be speeded
         driveMotor.set(state.speedMetersPerSecond * 0.5);
+    }
+
+    /**
+     * void function that stops all power to motors
+     */
+    public void stop() {
+        driveMotor.set(0);
+        angleMotor.set(0);
     }
 }
