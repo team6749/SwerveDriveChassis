@@ -47,6 +47,11 @@ public class SwerveDriveWithJoystick extends CommandBase {
     double ySpeed = -joystick.getX();
     double directionalSpeed = -joystick.getTwist() * 2.5;
 
+    // Dead zone to rotation input
+    if(Math.abs(directionalSpeed) <= 0.5 ) {
+      directionalSpeed = 0;
+    }
+
     //applies a controller deadzone 
     if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
       _swerveDrivebase.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 0));
