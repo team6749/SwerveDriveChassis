@@ -18,7 +18,6 @@ public class SwerveDrivebase extends SubsystemBase{
      * Creates a new SwerveDrivebase
      */
     public SwerveDrivebase(SwerveModule[] modules){
-        gyro.calibrate();
         this.modules = modules;
         //constructs a drivebase using translation2ds assigned to each module
         Translation2d[] translations = new Translation2d[modules.length];
