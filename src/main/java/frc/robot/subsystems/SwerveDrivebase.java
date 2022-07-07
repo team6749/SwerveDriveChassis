@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 
 public class SwerveDrivebase extends SubsystemBase{
@@ -19,7 +20,7 @@ public class SwerveDrivebase extends SubsystemBase{
     public SwerveDriveKinematics _kinematics;
     public SwerveModuleState[] states;
     public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-    public SwerveDriveOdometry _odometry;
+    public SwerveDriveOdometry odometry;
     private final Field2d field = new Field2d();
     // constructor
     /**
@@ -35,14 +36,14 @@ public class SwerveDrivebase extends SubsystemBase{
             translations[i] = modules[i].position;
         }
         _kinematics = new SwerveDriveKinematics(translations);
-        _odometry = new SwerveDriveOdometry(_kinematics, getChassisRotation(), new Pose2d());
+        odometry = new SwerveDriveOdometry(_kinematics, getChassisRotation(), new Pose2d());
     }
 
     private Rotation2d getChassisRotation(){
         return Rotation2d.fromDegrees(-gyro.getAngle());
     }
     public Pose2d getPose2d(){
-        return _odometry.getPoseMeters();
+        return odometry.getPoseMeters();
     }
     @Override
     public void periodic() {
@@ -51,7 +52,7 @@ public class SwerveDrivebase extends SubsystemBase{
         for(int i = 0; i < states.length; i++){
             states[i] = modules[i].getState();
         }
-        _odometry.update(getChassisRotation(), states);
+        odometry.update(getChassisRotation(), states);
         field.setRobotPose(getPose2d());
         //Call periodic on children
         for (SwerveModule swerveModule : modules) {
@@ -62,10 +63,13 @@ public class SwerveDrivebase extends SubsystemBase{
      * @param cSpeeds the desired chassis speeds to set each module to
      * converts each module to the ChassisSpeeds cSpeeds
      */
-    public void setDesiredChassisSpeeds(ChassisSpeeds cSpeeds) {
-        SwerveModuleState[] _desiredStates = _kinematics.toSwerveModuleStates(cSpeeds);
+    public void setDesiredChassisSpeeds(ChassisSpeeds cSpeeds, Translation2d pivotpoint) {
+        SwerveModuleState[] _desiredStates = _kinematics.toSwerveModuleStates(cSpeeds,pivotpoint);
         for (int i = 0; i < _desiredStates.length; i++) {
             modules[i].setDesiredState(_desiredStates[i]);
         }
+    }
+    public void setDesiredChassisSpeeds(ChassisSpeeds cSpeeds) {
+        setDesiredChassisSpeeds(cSpeeds,new Translation2d(0,0));
     }
 }
