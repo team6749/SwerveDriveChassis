@@ -72,7 +72,7 @@ public class SwerveDriveWithJoystick extends CommandBase {
 
     //output each speed to the wheels
     //_swerveDrivebase.setDesiredChassisSpeeds(desiredSpeeds, _swerveDrivebase.getPose2d().getTranslation().rotateBy(_swerveDrivebase.getPose2d().getRotation()));
-    _swerveDrivebase.setDesiredChassisSpeeds(desiredSpeeds);
+    _swerveDrivebase.setDesiredChassisSpeeds(desiredSpeeds, _swerveDrivebase.turning_point);
 }
 
   // Called once the command ends or is interrupted.
