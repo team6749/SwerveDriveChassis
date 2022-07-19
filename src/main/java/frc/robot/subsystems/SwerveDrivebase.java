@@ -74,4 +74,9 @@ public class SwerveDrivebase extends SubsystemBase{
     public void setDesiredChassisSpeeds(ChassisSpeeds cSpeeds) {
         setDesiredChassisSpeeds(cSpeeds,new Translation2d(0,0));
     }
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        for (int i = 0; i < desiredStates.length; i++) {
+            modules[i].setDesiredState(desiredStates[i]);
+        }
+    }
 }
