@@ -111,7 +111,7 @@ public class SwerveModule {
 
         angleMotor.set(turnOutput);
         //setting the motor to the speed it needs to be speeded
-        driveMotor.set(state.speedMetersPerSecond * 0.5);
+        driveMotor.set(state.speedMetersPerSecond);
     }
 
     /**

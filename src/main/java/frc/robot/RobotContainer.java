@@ -12,9 +12,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SwerveDriveWithJoystick;
+import frc.robot.commands.fieldorientpivotpoint;
 import frc.robot.commands.setpivotpoint;
 import frc.robot.subsystems.SwerveDrivebase;
 import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -57,7 +60,8 @@ public class RobotContainer {
     frontrightpivot.whenPressed(new setpivotpoint(Constants.frModule.position, _SwerveDrivebase));
     final JoystickButton centerpivot = new JoystickButton(_joystick, 7);//button 6 is labelled as "7" on the joystick
     centerpivot.whenPressed(new setpivotpoint(new Translation2d(0,0), _SwerveDrivebase));
-
+    final JoystickButton fieldpivot = new JoystickButton(_joystick, 12);
+    fieldpivot.whenPressed(new fieldorientpivotpoint(new Translation2d(0,0), _SwerveDrivebase));
   }
 
   
@@ -68,4 +72,6 @@ public class RobotContainer {
   //   // An ExampleCommand will run in autonomous
   // }
 
+  
+  
 }

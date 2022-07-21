@@ -47,6 +47,9 @@ public class SwerveDrivebase extends SubsystemBase{
     public Pose2d getPose2d(){
         return odometry.getPoseMeters();
     }
+    public void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(pose, getChassisRotation());
+    }
     @Override
     public void periodic() {
         //updating odometry by getting states of each module
