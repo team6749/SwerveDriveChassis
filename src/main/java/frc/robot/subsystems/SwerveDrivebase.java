@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -47,6 +48,9 @@ public class SwerveDrivebase extends SubsystemBase{
     public Pose2d getPose2d(){
         return odometry.getPoseMeters();
     }
+    public void resetOdometry(Pose2d pose) {
+        odometry.resetPosition(pose, getChassisRotation());
+    }
     @Override
     public void periodic() {
         //updating odometry by getting states of each module
@@ -56,6 +60,7 @@ public class SwerveDrivebase extends SubsystemBase{
         }
         odometry.update(getChassisRotation(), states);
         field.setRobotPose(getPose2d());
+        SmartDashboard.putString("position", getPose2d().toString());
         //Call periodic on children
         for (SwerveModule swerveModule : modules) {
             swerveModule.periodic();
@@ -78,5 +83,11 @@ public class SwerveDrivebase extends SubsystemBase{
         for (int i = 0; i < desiredStates.length; i++) {
             modules[i].setDesiredState(desiredStates[i]);
         }
+    }
+
+    public void stopModules() {
+        for (int i = 0; i < modules.length; i++) {
+            modules[i].stop();
+        }        
     }
 }

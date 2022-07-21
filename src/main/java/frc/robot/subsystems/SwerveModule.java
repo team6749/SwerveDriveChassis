@@ -48,14 +48,15 @@ public class SwerveModule {
      * @return the velocity of robot in meters per second
      */
     public double getDriveEncoderVelocity() {
-        return driveMotor.getSelectedSensorVelocity() / (2048 * 8.14);
+        return ((driveMotor.getSelectedSensorVelocity() / 204.8) / 8.14) * (Math.PI * 0.1);
     }
 
     /**
      * @return the position of the drive motor
      */
     public double getDriveEncoderPos(){
-        return driveMotor.getSelectedSensorPosition() / (2048 * 8.14) * (Math.PI * 0.1);
+        // return (driveMotor.getSelectedSensorPosition() / 2048) * 8.14 * (Math.PI * 0.1);
+        return ((driveMotor.getSelectedSensorPosition() / 2048) / 8.14) * (Math.PI * 0.1);
     }
 
     //Degrees

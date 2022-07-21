@@ -24,6 +24,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.trajectory.*;
 import frc.robot.subsystems.SwerveModule;
 /**
@@ -38,14 +40,14 @@ public class RobotContainer {
   
 
 
-  private final SwerveDrivebase _SwerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.flModule, Constants.blModule, Constants.frModule, Constants.brModule});
+  private final SwerveDrivebase swerveDrivebase = new SwerveDrivebase(new SwerveModule[] {Constants.flModule, Constants.blModule, Constants.frModule, Constants.brModule});
   public static Joystick _joystick = new Joystick(0);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    _SwerveDrivebase.setDefaultCommand(new SwerveDriveWithJoystick(_SwerveDrivebase, _joystick));
+    swerveDrivebase.setDefaultCommand(new SwerveDriveWithJoystick(swerveDrivebase, _joystick));
   }
 
   /**
@@ -56,18 +58,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton resetGyro = new JoystickButton(_joystick, 1);
-    resetGyro.whenPressed(new ResetGyro(_SwerveDrivebase));
+    resetGyro.whenPressed(new ResetGyro(swerveDrivebase));
     final JoystickButton frontleftpivot = new JoystickButton(_joystick, 5);
-    frontleftpivot.whenPressed(new setpivotpoint(Constants.flModule.position, _SwerveDrivebase));
+    frontleftpivot.whenPressed(new setpivotpoint(Constants.flModule.position, swerveDrivebase));
    
     final JoystickButton backleftpivot = new JoystickButton(_joystick, 3);
-    backleftpivot.whenPressed(new setpivotpoint(Constants.blModule.position, _SwerveDrivebase));
+    backleftpivot.whenPressed(new setpivotpoint(Constants.blModule.position, swerveDrivebase));
     final JoystickButton backrightpivot = new JoystickButton(_joystick, 4);
-    backrightpivot.whenPressed(new setpivotpoint(Constants.brModule.position, _SwerveDrivebase));
+    backrightpivot.whenPressed(new setpivotpoint(Constants.brModule.position, swerveDrivebase));
     final JoystickButton frontrightpivot = new JoystickButton(_joystick, 6);
-    frontrightpivot.whenPressed(new setpivotpoint(Constants.frModule.position, _SwerveDrivebase));
+    frontrightpivot.whenPressed(new setpivotpoint(Constants.frModule.position, swerveDrivebase));
     final JoystickButton centerpivot = new JoystickButton(_joystick, 7);//button 6 is labelled as "7" on the joystick
-    centerpivot.whenPressed(new setpivotpoint(new Translation2d(0,0), _SwerveDrivebase));
+    centerpivot.whenPressed(new setpivotpoint(new Translation2d(0,0), swerveDrivebase));
 
   }
 
@@ -77,7 +79,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(5 / 4, 3).setKinematics(_SwerveDrivebase._kinematics);
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(5 / 4, 3).setKinematics(swerveDrivebase._kinematics);
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),
@@ -95,13 +97,18 @@ public class RobotContainer {
 
       SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
         trajectory,
-        swerveSubsystem::getPose,
-        DriveConstants.kDriveKinematics,
+        swerveDrivebase::getPose2d,
+        swerveDrivebase._kinematics,
         xController,
         yController,
         thetaController,
-        swerveSubsystem::setModuleStates,
-        swerveSubsystem);
+        swerveDrivebase::setModuleStates,
+        swerveDrivebase);
+
+        return new SequentialCommandGroup(
+                new InstantCommand(() -> swerveDrivebase.resetOdometry(trajectory.getInitialPose())),
+                swerveControllerCommand,
+                new InstantCommand(() -> swerveDrivebase.stopModules()));
   }
 
 }
