@@ -20,8 +20,8 @@ public class fieldorientpivotpoint extends CommandBase {
     public void initialize()
     {
         // base.turning_point = point.minus(base.getPose2d().getTranslation());
-        base.turning_point = (base.getPose2d().getTranslation().minus(point));
-        System.out.println((base.getPose2d().getTranslation().minus(point))); 
+        base.turning_point = (base.getPose2d().getTranslation());
+        System.out.println((base.getPose2d().getTranslation()));
     }
     @Override
     public void execute()
