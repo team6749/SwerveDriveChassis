@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 public class SwerveModule {
     // private variables 
@@ -112,7 +113,7 @@ public class SwerveModule {
 
         angleMotor.set(turnOutput);
         //setting the motor to the speed it needs to be speeded
-        driveMotor.set(state.speedMetersPerSecond * 0.5);
+        driveMotor.set(state.speedMetersPerSecond / Constants.kMaxRobotVelocity);
     }
 
     /**
