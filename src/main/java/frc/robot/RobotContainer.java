@@ -29,6 +29,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.trajectory.*;
+import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.SwerveModule;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -76,21 +77,28 @@ public class RobotContainer {
   }
 
   
+  Pose2d robotStartPosition = new Pose2d(Units.inchesToMeters(41.75), Units.inchesToMeters(55.75), Rotation2d.fromDegrees(90));
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(5 / 4, 3).setKinematics(swerveDrivebase._kinematics);
-    int rand = (int)(Math.random() * (360) + 1);
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(1, 1).setKinematics(swerveDrivebase._kinematics);
+    //4.5, 3.5
+    // int rand = (int)(Math.random() * (360) + 1);
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
       //negative translation2d is right of opening
-      new Pose2d(0, 0, new Rotation2d(0)),
-      List.of(
-              new Translation2d(1, 0),
-              new Translation2d(1, -1),
-              new Translation2d(0, -1)),
-      new Pose2d(0, 0, Rotation2d.fromDegrees(rand)),
+      robotStartPosition,
+      List.of(),
+      new Pose2d(Units.inchesToMeters(148), Units.inchesToMeters(162), Rotation2d.fromDegrees(90)),
+        // new Pose2d(Units.inchesToMeters(320), Units.inchesToMeters(15), Rotation2d.fromDegrees(90)),
+        // List.of(
+          
+      //         new Translation2d(1, 0),
+      //         new Translation2d(1, -1),
+      //         new Translation2d(0, -1)),
+      
       trajectoryConfig);
 
       PIDController xController = new PIDController(6.5, 0, 0);
