@@ -10,8 +10,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.SwerveDrivebase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /** An example command that uses an example subsystem. */
 public class SwerveDriveWithJoystick extends CommandBase {
@@ -20,6 +22,8 @@ public class SwerveDriveWithJoystick extends CommandBase {
   private Joystick joystick;
   private SlewRateLimiter slewRateX = new SlewRateLimiter(5);
   private SlewRateLimiter slewRateY = new SlewRateLimiter(5);
+  public SendableChooser<String> orientation = new SendableChooser<String>(); 
+  public ChassisSpeeds desiredSpeeds;
 
   /**
    * Creates a new SwerveDriveWithJoystick command.
@@ -31,6 +35,10 @@ public class SwerveDriveWithJoystick extends CommandBase {
     _swerveDrivebase = subsystem;
     joystick = joy;
     // Use addRequirements() here to declare subsystem dependencies.
+
+    orientation.setDefaultOption("Field Oriented", "FO");
+    orientation.addOption("Robot Oriented", "RO");
+    SmartDashboard.putData(orientation);
     addRequirements(_swerveDrivebase);
   }
 
@@ -51,23 +59,27 @@ public class SwerveDriveWithJoystick extends CommandBase {
     if(Math.abs(directionalSpeed) <= 0.5 ) {
       directionalSpeed = 0;
     }
-
+    
     //applies a controller deadzone 
     if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
-      _swerveDrivebase.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 0));
-      return;
-    }
-
+        _swerveDrivebase.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 0));  
+        return;
+    }  
+    
     //apply the slew rate limiter
     double limitSpeedX = slewRateX.calculate(xSpeed);
     double limitSpeedY = slewRateY.calculate(ySpeed);
+    
+    if(orientation.getSelected().equals("RO")){  
+        //ROBOT ORIENTED DRIVE
+        desiredSpeeds = new ChassisSpeeds(limitSpeedX, limitSpeedY, directionalSpeed);
 
-    //Construct the chassis speeds - robot oriented
-    // ChassisSpeeds desiredSpeeds = new ChassisSpeeds(limitSpeedX, limitSpeedY, directionalSpeed);
-
-    //field oriented drive chassis speeds
-    ChassisSpeeds desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(limitSpeedX, limitSpeedY, directionalSpeed, _swerveDrivebase.getPose2d().getRotation());
-
+    } else {
+        //FIELD ORIENTED DRIVE
+        desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(limitSpeedX, limitSpeedY, directionalSpeed, _swerveDrivebase.getPose2d().getRotation());
+        
+    };    
+    
     //if(joystick.getRawButton(button))
 
     //output each speed to the wheels
