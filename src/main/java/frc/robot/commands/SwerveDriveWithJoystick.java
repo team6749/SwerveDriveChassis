@@ -18,8 +18,15 @@ public class SwerveDriveWithJoystick extends CommandBase {
   //private variables
   private SwerveDrivebase _swerveDrivebase;
   private Joystick joystick;
+<<<<<<< Updated upstream
   private SlewRateLimiter slewRateX = new SlewRateLimiter(5);
   private SlewRateLimiter slewRateY = new SlewRateLimiter(5);
+=======
+  private SlewRateLimiter slewRateX = new SlewRateLimiter(2.5);
+  private SlewRateLimiter slewRateY = new SlewRateLimiter(2.5);
+  public SendableChooser<String> orientation = new SendableChooser<String>(); 
+  public ChassisSpeeds desiredSpeeds;
+>>>>>>> Stashed changes
 
   /**
    * Creates a new SwerveDriveWithJoystick command.
@@ -31,6 +38,13 @@ public class SwerveDriveWithJoystick extends CommandBase {
     _swerveDrivebase = subsystem;
     joystick = joy;
     // Use addRequirements() here to declare subsystem dependencies.
+<<<<<<< Updated upstream
+=======
+
+    orientation.setDefaultOption("Robot Oriented", "RO");
+    orientation.addOption("Field Oriented", "FO");
+    SmartDashboard.putData(orientation);
+>>>>>>> Stashed changes
     addRequirements(_swerveDrivebase);
   }
 
@@ -45,7 +59,11 @@ public class SwerveDriveWithJoystick extends CommandBase {
     // get the joystick output values
     double xSpeed = -joystick.getY();
     double ySpeed = -joystick.getX();
+<<<<<<< Updated upstream
     double directionalSpeed = -joystick.getTwist() * 3;
+=======
+    double directionalSpeed = joystick.getTwist() * 2.0 ;
+>>>>>>> Stashed changes
 
     //applies a controller deadzone 
     if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
