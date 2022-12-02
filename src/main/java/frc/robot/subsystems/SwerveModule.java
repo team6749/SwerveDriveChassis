@@ -6,11 +6,14 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange.*;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 public class SwerveModule {
     // private variables 
@@ -63,7 +66,7 @@ public class SwerveModule {
      * @return the rotation of a module in degrees
      */
     public double getRotationEncoder() {
-        return absoluteEncoder.getAbsolutePosition();
+        return (double) Math.round(absoluteEncoder.getAbsolutePosition() * 10000.0) / 10000.0;
     }
 
     //This must be called all the time
@@ -72,6 +75,7 @@ public class SwerveModule {
         SmartDashboard.putNumber("Swerve " + name + " velocity", getDriveEncoderVelocity());
         SmartDashboard.putNumber("Swerve " + name + " position", getDriveEncoderPos());
 
+        printOffsets(calibrationDegrees, getRotationEncoder(), name);
     }
 
     /**
@@ -123,5 +127,11 @@ public class SwerveModule {
     public void stop() {
         driveMotor.set(0);
         angleMotor.set(0);
+    }
+
+    public void printOffsets(double calibration, double currentAngle, String name){
+        //currentAngle includes calibration
+        double offset = (double) Math.abs(360.0 - currentAngle);
+        System.out.println(name + ": " + offset);
     }
 }

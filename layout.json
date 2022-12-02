@@ -22,7 +22,7 @@
               "_title": "SmartDashboard/Swerve Back Left position"
             }
           },
-          "5,5": {
+          "5,6": {
             "size": [
               2,
               1
@@ -55,9 +55,9 @@
               "_title": "SmartDashboard/Swerve Back Right position"
             }
           },
-          "7,5": {
+          "7,6": {
             "size": [
-              2,
+              3,
               1
             ],
             "content": {
@@ -88,7 +88,7 @@
               "_title": "SmartDashboard/Swerve Front Left position"
             }
           },
-          "3,5": {
+          "5,5": {
             "size": [
               2,
               1
@@ -142,8 +142,6 @@
               "_source0": "network_table:///LiveWindow/Ungrouped/CANCoder [9]/Position",
               "_title": "BL Pos"
             }
-<<<<<<< Updated upstream
-=======
           },
           "0,0": {
             "size": [
@@ -167,9 +165,9 @@
               "_title": "position"
             }
           },
-          "9,5": {
+          "7,5": {
             "size": [
-              2,
+              3,
               1
             ],
             "content": {
@@ -416,7 +414,94 @@
               "_source0": "network_table:///SmartDashboard/Swerve Front Right velocity",
               "_title": "Swerve Front Right velocity"
             }
->>>>>>> Stashed changes
+          },
+          "8,4": {
+            "size": [
+              3,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Front Right target rotation",
+              "_title": "Swerve Front Right target rotation"
+            }
+          },
+          "17,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Front Right target pid",
+              "_title": "Swerve Front Right target pid"
+            }
+          },
+          "18,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Front Left target rotation",
+              "_title": "Swerve Front Left target rotation"
+            }
+          },
+          "9,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Front Left target pid",
+              "_title": "Swerve Front Left target pid"
+            }
+          },
+          "10,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Back Left target rotation",
+              "_title": "Swerve Back Left target rotation"
+            }
+          },
+          "11,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Back Left target pid",
+              "_title": "Swerve Back Left target pid"
+            }
+          },
+          "12,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Back Right target rotation",
+              "_title": "Swerve Back Right target rotation"
+            }
+          },
+          "13,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Back Right target pid",
+              "_title": "Swerve Back Right target pid"
+            }
           }
         }
       }
@@ -464,8 +549,8 @@
     }
   ],
   "windowGeometry": {
-    "x": 440.0,
-    "y": 96.0,
+    "x": -7.199999809265137,
+    "y": -7.199999809265137,
     "width": 1550.4000244140625,
     "height": 830.4000244140625
   }
