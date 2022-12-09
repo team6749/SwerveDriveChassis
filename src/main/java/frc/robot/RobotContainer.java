@@ -12,9 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SwerveDriveWithJoystick;
-import frc.robot.commands.setpivotpoint;
 import frc.robot.subsystems.SwerveDrivebase;
 
 import java.util.List;
@@ -60,19 +58,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    final JoystickButton resetGyro = new JoystickButton(_joystick, 1);
-    resetGyro.whenPressed(new ResetGyro(swerveDrivebase));
-    final JoystickButton frontleftpivot = new JoystickButton(_joystick, 5);
-    frontleftpivot.whenPressed(new setpivotpoint(Constants.flModule.position, swerveDrivebase));
+
    
-    final JoystickButton backleftpivot = new JoystickButton(_joystick, 3);
-    backleftpivot.whenPressed(new setpivotpoint(Constants.blModule.position, swerveDrivebase));
-    final JoystickButton backrightpivot = new JoystickButton(_joystick, 4);
-    backrightpivot.whenPressed(new setpivotpoint(Constants.brModule.position, swerveDrivebase));
-    final JoystickButton frontrightpivot = new JoystickButton(_joystick, 6);
-    frontrightpivot.whenPressed(new setpivotpoint(Constants.frModule.position, swerveDrivebase));
-    final JoystickButton centerpivot = new JoystickButton(_joystick, 7);//button 6 is labelled as "7" on the joystick
-    centerpivot.whenPressed(new setpivotpoint(new Translation2d(0,0), swerveDrivebase));
+
 
   }
 
