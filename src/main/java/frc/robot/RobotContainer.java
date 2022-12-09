@@ -10,10 +10,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ResetGyro;
+
 import frc.robot.commands.SwerveDriveWithJoystick;
-import frc.robot.commands.fieldorientpivotpoint;
-import frc.robot.commands.setpivotpoint;
+
 import frc.robot.subsystems.SwerveDrivebase;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -46,23 +45,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    final JoystickButton resetGyro = new JoystickButton(_joystick, 1);
-    resetGyro.whenPressed(new ResetGyro(_SwerveDrivebase));
-    final JoystickButton frontleftpivot = new JoystickButton(_joystick, 5);
-    frontleftpivot.whenPressed(new setpivotpoint(Constants.flModule.position, _SwerveDrivebase));
-   
-    final JoystickButton backleftpivot = new JoystickButton(_joystick, 3);
-    backleftpivot.whenPressed(new setpivotpoint(Constants.blModule.position, _SwerveDrivebase));
-    final JoystickButton backrightpivot = new JoystickButton(_joystick, 4);
-    backrightpivot.whenPressed(new setpivotpoint(Constants.brModule.position, _SwerveDrivebase));
-    final JoystickButton frontrightpivot = new JoystickButton(_joystick, 6);
-    frontrightpivot.whenPressed(new setpivotpoint(Constants.frModule.position, _SwerveDrivebase));
-    final JoystickButton centerpivot = new JoystickButton(_joystick, 7);//button 6 is labelled as "7" on the joystick
-    centerpivot.whenPressed(new setpivotpoint(new Translation2d(0,0), _SwerveDrivebase));
-    final JoystickButton fieldpivot = new JoystickButton(_joystick, 12);
-    fieldpivot.whenPressed(new fieldorientpivotpoint(new Translation2d(0,0), _SwerveDrivebase));
-  }
+  private void configureButtonBindings() {}
 
   
   /**
