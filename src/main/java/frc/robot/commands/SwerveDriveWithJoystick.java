@@ -49,16 +49,28 @@ public class SwerveDriveWithJoystick extends CommandBase {
   public void execute() {
 
     // get the joystick output values
-    double xSpeed = joystick.getY();//xonjoystick
-    double ySpeed = joystick.getX()*.2;//Y ON JOYSTICK
-    double directionalSpeed = joystick.getTwist() * 2.0 ;
+    double xSpeed = joystick.getY();//x on joystick
+    double ySpeed = joystick.getX() * 0.75;//Y ON JOYSTICK
+    double directionalSpeed = joystick.getTwist()* 1.75;
 
-    //applies a controller deadzone 
-    if(new Translation2d(xSpeed, ySpeed).getNorm() < 0.1 && Math.abs(directionalSpeed) < 0.1) {
-      _swerveDrivebase.setDesiredChassisSpeeds(new ChassisSpeeds(0, 0, 0));
-      return;
+    //applies a controller deadzone:
+
+    //twist deadzone
+    if(Math.abs(directionalSpeed) < (0.75) ) {
+        directionalSpeed = 0;
     }
 
+    //x joystick deadzone
+    if(Math.abs(xSpeed) < (0.2) ) {
+        xSpeed = 0;
+    }
+
+    //y joystick deadzone
+    if(Math.abs(ySpeed) < (0.2)) {
+        ySpeed = 0;
+    }    // System.out.println(directionalSpeed + " directional speed");
+    // System.out.println(xSpeed + " x speed");
+    // System.out.println(ySpeed + " y speed");
     //apply the slew rate limiter
     double limitSpeedX = slewRateX.calculate(xSpeed);
     double limitSpeedY = slewRateY.calculate(ySpeed);

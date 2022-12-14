@@ -23,10 +23,38 @@ public final class Constants {
     // absolute encoder port
     // calibration of angle sensor
     // pos = translation2d distance from the center
-    public static SwerveModule flModule = new SwerveModule("Front Left", 5, 6, 10, 288.985, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(11.25)));
-    public static SwerveModule blModule = new SwerveModule("Back Left", 7, 8, 11, 123.43, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(11.25)));
-    public static SwerveModule frModule = new SwerveModule("Front Right", 3, 4, 12, -42.2637, new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(-11.25)));
-    public static SwerveModule brModule = new SwerveModule("Back Right", 1, 2, 9, -68.687, new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(-11.25)));
-    public static double kMaxRobotVelocity = 2.5;
-    public static double calibrationGoal = 0;
+    public static SwerveModule flModule = new SwerveModule(
+        "Front Left",
+        5, 
+        6, 
+        10, 
+        105.985, 
+        new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(11.25))
+    );
+    public static SwerveModule blModule = new SwerveModule(
+        "Back Left", 
+        7, 
+        8, 
+        11, 
+        303.43, 
+        new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(11.25))
+    );
+    public static SwerveModule frModule = new SwerveModule(
+        "Front Right", 
+        3, 
+        4, 
+        12, 
+        319.7363, 
+        new Translation2d(Units.inchesToMeters(11.25), Units.inchesToMeters(-11.25))
+    );
+    public static SwerveModule brModule = new SwerveModule(
+        "Back Right", 
+        1, 
+        2, 
+        9, 
+        292.913, 
+        new Translation2d(Units.inchesToMeters(-11.25), Units.inchesToMeters(-11.25))
+    );
+    
+    public static double kMaxRobotVelocity = 2.75;
 }

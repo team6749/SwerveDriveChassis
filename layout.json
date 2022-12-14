@@ -11,7 +11,7 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "5,0": {
+          "11,6": {
             "size": [
               2,
               1
@@ -44,7 +44,7 @@
               "_title": "SmartDashboard/Swerve Back Left velocity"
             }
           },
-          "7,0": {
+          "13,6": {
             "size": [
               2,
               1
@@ -77,7 +77,7 @@
               "_title": "SmartDashboard/Swerve Back Right velocity"
             }
           },
-          "3,0": {
+          "11,5": {
             "size": [
               2,
               1
@@ -501,6 +501,17 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Swerve Back Right target pid",
               "_title": "Swerve Back Right target pid"
+            }
+          },
+          "13,5": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Swerve Front Right position",
+              "_title": "SmartDashboard/Swerve Front Right position"
             }
           }
         }

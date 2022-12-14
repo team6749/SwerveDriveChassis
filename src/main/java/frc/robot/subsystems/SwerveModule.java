@@ -5,9 +5,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.WPI_CANCoder;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange.*;
-
+import edu.wpi.first.math.util.Units;
 import org.opencv.core.Mat;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -58,7 +57,7 @@ public class SwerveModule {
      * @return the position of the drive motor
      */
     public double getDriveEncoderPos(){
-        return driveMotor.getSelectedSensorPosition() / (2048 * 8.14) * (Math.PI * 0.1);
+        return Units.metersToFeet(driveMotor.getSelectedSensorPosition() / (2048 * 8.14) * (Math.PI * 0.1));
     }
 
     //Degrees
@@ -75,7 +74,7 @@ public class SwerveModule {
         SmartDashboard.putNumber("Swerve " + name + " velocity", getDriveEncoderVelocity());
         SmartDashboard.putNumber("Swerve " + name + " position", getDriveEncoderPos());
 
-        printOffsets(calibrationDegrees, getRotationEncoder(), name);
+        // printOffsets(calibrationDegrees, getRotationEncoder(), name);
     }
 
     /**
@@ -94,6 +93,7 @@ public class SwerveModule {
             stop();
             return;
         }
+        
         // Optimize the reference state to avoid spinning further than 90 degrees
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getRotationEncoder()));
 
@@ -131,7 +131,7 @@ public class SwerveModule {
 
     public void printOffsets(double calibration, double currentAngle, String name){
         //currentAngle includes calibration
-        double offset = (double) Math.abs(360.0 - currentAngle);
+        double offset = (double) calibration - currentAngle;
         System.out.println(name + ": " + offset);
     }
 }
