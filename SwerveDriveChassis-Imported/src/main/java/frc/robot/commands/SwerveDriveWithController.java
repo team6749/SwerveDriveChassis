@@ -26,9 +26,12 @@ public class SwerveDriveWithController extends Command {
     private SlewRateLimiter thetaSlew = new SlewRateLimiter(360);
 
     /**
-     * Creates a new SwerveDriveWithController command -> the default command of swervedrivebase.
-     * This cannot be a Command written inside the subsytem because it deals with the state of the robot.
-     * @param subsystem the SwerveDrivebase to control
+     * Creates a new SwerveDriveWithController command -> the default command of
+     * swervedrivebase.
+     * This cannot be a Command written inside the subsytem because it deals with
+     * the state of the robot.
+     * 
+     * @param subsystem  the SwerveDrivebase to control
      * @param controller an XboxController to operate the swerveDrivebase
      */
     public SwerveDriveWithController(SwerveDrivebase subsystem, XboxController controller) {
@@ -40,7 +43,8 @@ public class SwerveDriveWithController extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -73,13 +77,18 @@ public class SwerveDriveWithController extends Command {
                 desiredSpeeds = new ChassisSpeeds(ySpeedms, xSpeedms, thetaSpeedRad);
                 break;
             case FieldOriented:
-                Rotation2d robotOffsetToAlliance = swerveDriveSubsystem.poseEstimator.getEstimatedPosition().getRotation();
-                if (DriverStation.getAlliance().get() == Alliance.Red)  {
-                    robotOffsetToAlliance = robotOffsetToAlliance.unaryMinus();
+                Rotation2d robotOffsetToAlliance = swerveDriveSubsystem.poseEstimator.getEstimatedPosition()
+                        .getRotation();
+                if (DriverStation.getAlliance().get() == Alliance.Red) {
+                    desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(-ySpeedms, -xSpeedms,
+                            thetaSpeedRad, robotOffsetToAlliance);
+
+                } else {
+                    desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ySpeedms, xSpeedms,
+                            thetaSpeedRad, robotOffsetToAlliance);
+
                 }
                 // put field oriented drive here.
-                desiredSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(ySpeedms, xSpeedms,
-                        thetaSpeedRad, robotOffsetToAlliance);
                 break;
         }
 
